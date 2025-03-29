@@ -5,54 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FREAKY MOON</title>
+    <link rel="icon" type="image/png" href="favicon.ico"> <!-- Optional: Fix favicon error -->
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        img {
+            animation: freakout 0.2s ease-in-out infinite;
+            width: 75vmin;
+            cursor: pointer; /* Show clickable cursor */
+        }
+
+        @keyframes freakout {
+            0% { rotate: 20deg; }
+            50% { rotate: -20deg; }
+            100% { rotate: 20deg; }
+        }
+    </style>
 </head>
-<style>
-    body {
-        display: flex;
-        margin: 0;
-        width: 100vw;
-        height: 100vh;
-        justify-content: center;
-        align-items: center;
-        background-color: black;
-    }
-
-    img {
-        animation: freakout 0.2s ease-in-out infinite;
-        width: 75vmin;
-    }
-
-    @keyframes freakout {
-        0% {
-            rotate: 20deg;
-        }
-
-        50% {
-            rotate: -20deg;
-        }
-
-        100% {
-            rotate: 20deg;
-        }
-    }
-</style>
 
 <body>
-    <img src="moon.png">
-    <audio autoplay loop>
-        <source src="lemiKnow.mp3" type="audio/mpeg">
-    </audio>
-</body>
+<img src="moon.png" id="moon" onclick="vibrate()">
+
+<audio id="bg-music" autoplay loop>
+    <source src="lemiKnow.mp3" type="audio/mpeg">
+</audio>
 
 <script defer>
     document.addEventListener("DOMContentLoaded", function () {
         let audio = document.getElementById("bg-music");
-        audio.muted = false; // Unmute after page load
-        setTimeout(() => {
-            audio.play().catch(error => console.log("Autoplay blocked.", error));
-        }, 300)
 
+        if (audio) { // Ensure audio element exists
+            audio.muted = false;
+
+            // Try to play the audio after a slight delay
+            setTimeout(() => {
+                audio.play().catch(error => console.log("Autoplay blocked. User interaction required.", error));
+            }, 300);
+        } else {
+            console.log("Audio element not found.");
+        }
     });
+
+    function vibrate() {
+        if ("vibrate" in navigator) { // Check if the browser supports vibration
+            navigator.vibrate(20000); // Vibrate for 200ms
+            console.log("Vibrating...");
+        } else {
+            console.log("Vibration not supported on this device.");
+        }
+    }
 </script>
+</body>
 
 </html>
