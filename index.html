@@ -7,7 +7,7 @@
     <title>FREAKY MOON</title>
 </head>
 <style>
-    body{
+    body {
         display: flex;
         margin: 0;
         width: 100vw;
@@ -16,28 +16,43 @@
         align-items: center;
         background-color: black;
     }
-    img{
+
+    img {
         animation: freakout 0.2s ease-in-out infinite;
         width: 75vmin;
     }
-    @keyframes freakout{
-        0%{
+
+    @keyframes freakout {
+        0% {
             rotate: 20deg;
         }
-        50%{
+
+        50% {
             rotate: -20deg;
         }
-        100%{
+
+        100% {
             rotate: 20deg;
         }
     }
 </style>
 
 <body>
-<img src="moon.png">
+    <img src="moon.png">
+    <audio autoplay loop>
+        <source src="lemiKnow.mp3" type="audio/mpeg">
+    </audio>
 </body>
 
 <script defer>
+    document.addEventListener("DOMContentLoaded", function () {
+        let audio = document.getElementById("bg-music");
+        audio.muted = false; // Unmute after page load
+        setTimeout(() => {
+            audio.play().catch(error => console.log("Autoplay blocked.", error));
+        }, 300)
+
+    });
 </script>
 
 </html>
