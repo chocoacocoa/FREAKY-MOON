@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display: flex;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+    }
+    img{
+        animation: freakout 0.2s ease-in-out infinite;
+    }
+    @keyframes freakout{
+        0%{
+            rotate: 20deg;
+        }
+        50%{
+            rotate: -20deg;
+        }
+        100%{
+            rotate: 20deg;
+        }
+    }
+</style>
+
+<body>
+<img src="moon.png">
+</body>
+
+<script defer>
+</script>
+
+</html>
