@@ -15,54 +15,118 @@
             justify-content: center;
             align-items: center;
             background-color: black;
+            flex-direction: column;
         }
 
         img {
-            animation: freakout 0.2s ease-in-out infinite;
+
             width: 75vmin;
-            cursor: pointer; /* Show clickable cursor */
+            cursor: pointer;
+            /* Show clickable cursor */
         }
 
         @keyframes freakout {
-            0% { rotate: 20deg; }
-            50% { rotate: -20deg; }
-            100% { rotate: 20deg; }
+            0% {
+                rotate: 20deg;
+            }
+
+            50% {
+                rotate: -20deg;
+            }
+
+            100% {
+                rotate: 20deg;
+            }
+        }
+
+        #form {
+            width: 100vw;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: center;
+            opacity: 0;
+            position: absolute;
+            top: 15vh;
+            transition: 0.5s;
+        }
+
+        * {
+            color: white;
+            transition: 0.2s;
+        }
+
+        #message {
+            text-align: center;
+            font-size: 5vmin;
+            display: none;
+            opacity: 0;
+            position: absolute;
+            bottom: 5vh;
         }
     </style>
 </head>
 
 <body>
-<img src="moon.png" id="moon" onclick="vibrate()">
+    <img src="moon.png" id="moon">
 
-<audio id="bg-music" autoplay loop>
-    <source src="lemiKnow.mp3" type="audio/mpeg">
-</audio>
-
-<script defer>
-    document.addEventListener("DOMContentLoaded", function () {
-        let audio = document.getElementById("bg-music");
-
-        if (audio) { // Ensure audio element exists
-            audio.muted = false;
-
-            // Try to play the audio after a slight delay
-            setTimeout(() => {
-                audio.play().catch(error => console.log("Autoplay blocked. User interaction required.", error));
-            }, 300);
-        } else {
-            console.log("Audio element not found.");
-        }
-    });
-
-    function vibrate() {
-        if ("vibrate" in navigator) { // Check if the browser supports vibration
-            navigator.vibrate(20000); // Vibrate for 200ms
-            console.log("Vibrating...");
-        } else {
-            console.log("Vibration not supported on this device.");
-        }
-    }
-</script>
+    <div id="form">
+        <input type="text" id="input" placeholder="Enter In Seconds" />
+        <button id="button">start</button>
+    </div>
+    <div id="message">
+        <h1>you unlocked the secret feature...<br>use it with care<br>and dont wet your device</h1>
+    </div>
 </body>
+<script defer>
+    let moon = document.getElementById('moon')
+    let status = false;
+    let message = document.getElementById('message')
+    let button = document.getElementById('button')
+    let form = document.getElementById('form')
+
+    moon.addEventListener('click', function () {
+        if (status === true) {
+            moon.style.animation = "freakout 0.5s infinite";
+            console.log('\n\n\nanimation on');
+            console.log(`status ${status}`);
+            status = false;
+        } else if (status == false) {
+            moon.style.animation = "unset"
+            console.log('\n\n\nanimation off')
+            console.log(`status ${status}`);
+            status = true;
+        }
+    })
+
+    moon.addEventListener('dblclick', function () {
+        form.style.opacity = '1';
+        console.log('\n\n\n double clicked');
+        message.style.display = "block";
+        message.style.opacity = "1"
+        setTimeout(()=>{
+            message.style.opacity = '0';
+        }, 2000)
+        setTimeout(()=>{
+            message.style.display = 'none';
+        }, 2500)
+    })
+
+    button.addEventListener('click', function () {
+        let input = document.getElementById('input').value;
+        console.log(input);
+        let newinput = input * 1000;//turn into seconds
+        console.log(`${newinput} seconds`)
+        moon.style.animation = "freakout 0.2s infinite"
+        navigator.vibrate(newinput);
+        setTimeout(() => {
+            console.log('vibrate stop');
+            moon.style.animation = "unset"
+        }, newinput)
+    })
+
+
+</script>
 
 </html>
